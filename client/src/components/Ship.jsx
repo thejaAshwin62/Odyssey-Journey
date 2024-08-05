@@ -79,7 +79,7 @@ const Ship = ({
         borderRadius: 5,
         marginBottom: 8,
         boxShadow: 8,
-        marginLeft: 5,
+        marginLeft: 0,
       }}
     >
       <CardMedia

@@ -5,23 +5,46 @@ import Logo from "./Logo";
 import LogoutContainer from "./LogoutContainer";
 
 // Styled AppBar with custom color and no shadow
-const CustomAppBar = styled(AppBar)(({ theme }) => ({
+const CustomAppBar = styled(AppBar)(({ theme, showSidebar }) => ({
   backgroundColor: "white", // Custom color
   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Slight shadow
+  [theme.breakpoints.down("sm")]: {
+    height: "48px",
+    display: showSidebar ? "none" : "flex", // Hide the navbar when sidebar is shown
+  },
+}));
+
+const CustomToolbar = styled(Toolbar)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  position: "relative",
+  [theme.breakpoints.down("sm")]: {
+    minHeight: "48px", // Adjust the Toolbar height for mobile devices
+  },
+}));
+
+const LogoContainer = styled("div")(({ theme, showSidebar }) => ({
+  flexGrow: 1,
+  display: "flex",
+  justifyContent: "center",
+  position: "absolute",
+  left: "50%",
+  transform: "translateX(-50%)",
+  opacity: showSidebar ? 0 : 1, // Hide logo when sidebar is shown
+  visibility: showSidebar ? "hidden" : "visible", // Hide logo when sidebar is shown
+  transition: "opacity 0.5s ease-in-out, visibility 0.5s ease-in-out", // Smooth transition for opacity and visibility
+  [theme.breakpoints.down("sm")]: {
+    left: "45%", // Adjust position for mobile devices
+    transform: "translateX(-50%)", // Adjust transform for mobile devices
+  },
 }));
 
 const Navbar = () => {
   const { toggleSidebar, showSidebar } = useDashboardContext();
 
   return (
-    <CustomAppBar position="sticky">
-      <Toolbar
-        style={{
-          display: "flex",
-          alignItems: "center",
-          position: "relative",
-        }}
-      >
+    <CustomAppBar position="sticky" showSidebar={showSidebar}>
+      <CustomToolbar>
         <IconButton
           edge="start"
           sx={{ color: "#BB61FF" }} // Change color here
@@ -32,21 +55,9 @@ const Navbar = () => {
         </IconButton>
 
         {/* Centered Logo */}
-        <div
-          style={{
-            flexGrow: 1,
-            display: "flex",
-            justifyContent: "center",
-            position: "absolute",
-            left: "50%",
-            transform: "translateX(-50%)",
-            opacity: showSidebar ? 1 : 0, // Smoothly transition the opacity
-            visibility: showSidebar ? "visible" : "hidden", // Hide or show element
-            transition: "opacity 0.5s ease-in-out, visibility 0.5s ease-in-out", // Smooth transition for opacity and visibility
-          }}
-        >
+        <LogoContainer showSidebar={showSidebar}>
           <Logo />
-        </div>
+        </LogoContainer>
 
         {/* Logout Container */}
         <div
@@ -60,7 +71,7 @@ const Navbar = () => {
         >
           <LogoutContainer />
         </div>
-      </Toolbar>
+      </CustomToolbar>
     </CustomAppBar>
   );
 };

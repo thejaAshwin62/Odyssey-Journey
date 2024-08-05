@@ -28,21 +28,6 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const loginDemoUser = async () => {
-    const data = {
-      email: "test@test.com",
-      password: "secret123",
-    };
-    try {
-      await customFetch.post("/auth/login", data);
-      toast.success("Take a test drive");
-      navigate("/dashboard");
-    } catch (error) {
-      toast.error(error?.response?.data?.msg);
-    }
-  };
-
   return (
     <Container
       component="main"
@@ -54,7 +39,11 @@ const Login = () => {
         alignItems: "center",
         bgcolor: "#FAFAFA", // Light background color
         padding: 2,
-        marginLeft: 40,
+        "@media (max-width: 600px)": {
+          padding: 1,
+          height: "auto",
+          marginTop: 8,
+        },
       }}
     >
       <Grid container spacing={4} sx={{ maxWidth: "1200px" }}>
@@ -62,17 +51,18 @@ const Login = () => {
         <Grid
           item
           xs={12}
-          sm={6}
+          md={6}
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            order: { xs: 2, md: 1 },
           }}
         >
           <Paper
             elevation={6} // Increased elevation for more depth
             sx={{
-              padding: 4, // Increased padding
+              padding: { xs: 2, sm: 4 }, // Responsive padding
               width: "100%",
               maxWidth: "400px", // Larger max-width for the form
               display: "flex",
@@ -109,7 +99,6 @@ const Login = () => {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                defaultValue="12345678"
                 required
                 sx={{ mb: 2 }}
               />
@@ -130,6 +119,7 @@ const Login = () => {
               >
                 Login
               </Button>
+              
               <Typography
                 variant="body2"
                 color="textSecondary"
@@ -152,22 +142,23 @@ const Login = () => {
         <Grid
           item
           xs={12}
-          sm={6}
+          md={6}
           sx={{
-            display: "flex",
+            display: { xs: "none", md: "flex" }, // Hide on mobile
             justifyContent: "center",
             alignItems: "center",
+            order: { xs: 1, md: 2 },
+            marginBottom: { xs: 2, md: 0 },
           }}
         >
           <img
             src={login}
-            alt="Register"
+            alt="Login"
             style={{
               width: "100%", // Full width of its container
               maxWidth: "330px", // Increased max-width
               height: "auto", // Maintain aspect ratio
               borderRadius: "12px",
-              marginRight:"100px",
               boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)", // More pronounced shadow
             }}
           />

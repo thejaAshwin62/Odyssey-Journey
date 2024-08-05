@@ -38,7 +38,11 @@ const Register = () => {
         alignItems: "center",
         bgcolor: "#FAFAFA", // Light background color
         padding: 2,
-        marginLeft: 35,
+        "@media (max-width: 600px)": {
+          padding: 1,
+          height: "auto",
+          marginTop: 0,
+        },
       }}
     >
       <Grid container spacing={4} sx={{ maxWidth: "1200px" }}>
@@ -46,17 +50,18 @@ const Register = () => {
         <Grid
           item
           xs={12}
-          sm={6}
+          md={6}
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            order: { xs: 2, md: 1 },
           }}
         >
           <Paper
             elevation={6} // Increased elevation for more depth
             sx={{
-              padding: 4, // Increased padding
+              padding: { xs: 2, sm: 4 }, // Responsive padding
               width: "100%",
               maxWidth: "400px", // Larger max-width for the form
               display: "flex",
@@ -123,7 +128,6 @@ const Register = () => {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                defaultValue="12345678"
                 required
                 sx={{ mb: 2 }}
               />
@@ -166,11 +170,13 @@ const Register = () => {
         <Grid
           item
           xs={12}
-          sm={6}
+          md={6}
           sx={{
-            display: "flex",
+            display: { xs: "none", md: "flex" }, // Hide on mobile
             justifyContent: "center",
             alignItems: "center",
+            order: { xs: 1, md: 2 },
+            marginBottom: { xs: 2, md: 0 },
           }}
         >
           <img
@@ -181,7 +187,6 @@ const Register = () => {
               maxWidth: "700px", // Increased max-width
               height: "auto", // Maintain aspect ratio
               borderRadius: "12px",
-
               boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)", // More pronounced shadow
             }}
           />

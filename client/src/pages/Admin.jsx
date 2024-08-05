@@ -5,7 +5,6 @@ import {
   FaCheckCircle,
   FaClock,
   FaBan,
-  FaHourglassStart,
 } from "react-icons/fa";
 import { useLoaderData, redirect } from "react-router-dom";
 import customFetch from "../utils/customFetch";
@@ -26,6 +25,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import { useMediaQuery } from "@mui/material";
 
 // Styled components for table
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -63,11 +63,9 @@ export const loader = async () => {
 
 const AdminPage = () => {
   const { users, ships, bookedShips, bookingsData } = useLoaderData();
-  
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const handleStatusChange = async (bookingId, newStatus) => {
-     
-
     try {
       await customFetch.patch(`/ships/bookings/${bookingId}/status`, {
         status: newStatus,
@@ -102,9 +100,8 @@ const AdminPage = () => {
     0
   );
 
-
   return (
-    <div>
+    <div style={{ padding: "0 16px" }}>
       {/* Statistics Section */}
       <Wrapper>
         <StatsItem
@@ -145,8 +142,21 @@ const AdminPage = () => {
       </Wrapper>
 
       {/* Table Section */}
-      <TableContainer component={Paper} sx={{ mt: 4 }}>
-        <Table sx={{ minWidth: 500 }} aria-label="customized table">
+      <TableContainer
+        component={Paper}
+        sx={{
+          mt: 4,
+          maxWidth: isMobile ? "100%" : "unset",
+          overflowX: "auto", // Allow horizontal scrolling on small screens
+        }}
+      >
+        <Table
+          sx={{
+            minWidth: 500,
+            fontSize: isMobile ? "12px" : "14px", // Adjust font size for mobile
+          }}
+          aria-label="customized table"
+        >
           <TableHead>
             <TableRow>
               <StyledTableCell>User Name</StyledTableCell>
@@ -177,6 +187,7 @@ const AdminPage = () => {
                       onChange={(e) =>
                         handleStatusChange(booking.bookingId, e.target.value)
                       }
+                      sx={{ fontSize: isMobile ? "12px" : "14px" }}
                     >
                       <MenuItem value="pending">Pending</MenuItem>
                       <MenuItem value="approved">Approved</MenuItem>
