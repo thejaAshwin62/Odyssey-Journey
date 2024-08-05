@@ -1,0 +1,259 @@
+import React, { useEffect, useState } from "react";
+import Wrapper from "../assets/wrappers/StatItem";
+import Test from "../assets/images/main.svg";
+import customFetch from "../utils/customFetch";
+import { toast } from "react-toastify";
+import { useLoaderData, redirect } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Divider,
+  Box,
+} from "@mui/material";
+import { StatsItem } from "../components";
+import { FaSuitcaseRolling, FaCalendarCheck } from "react-icons/fa";
+import StatsGraph from "../components/StatsGraph";
+
+export const loader = async () => {
+  try {
+    const [adminStatsResponse, userResponse, shipsResponse] = await Promise.all(
+      [
+        customFetch.get("/users/admin/app-stats"),
+        customFetch.get("/auth/me"),
+        customFetch.get("/ships"),
+      ]
+    );
+
+    return {
+      adminStats: adminStatsResponse.data,
+      userInfo: userResponse.data,
+      ships: shipsResponse.data.ships || [],
+    };
+  } catch (error) {
+    toast.error("Failed to fetch data");
+    return redirect("/dashboard");
+  }
+};
+
+const Stats = () => {
+  const { ships, userInfo, adminStats } = useLoaderData();
+
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+console.log(adminStats);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const userId = userInfo.userId;
+        const response = await customFetch.get(
+          `/users/booked-details/${userId}`
+        );
+        setBookings(response.data.bookings);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBookings();
+  }, [userInfo]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <style>
+        {`
+          .card-media {
+            height: 350px;
+          }
+
+          .card-overlay {
+            width: 250px;
+            top: 250px;
+            right: 80px;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: white;
+            border-radius: 20px;
+            padding: 1px;
+            position: absolute;
+          }
+
+          @media (max-width: 600px) {
+            .card-media {
+              height: 250px;
+            }
+
+            .card-overlay {
+              width: 200px;
+              top: 200px;
+              right: -20px;
+            }
+            .form-title {
+              text-align: center;
+              font-size: 30.3407px;
+              margin-top: 20px;
+            }
+          }
+        `}
+      </style>
+
+      <Wrapper style={{ marginTop: "0px" }}>
+        <div className="content">
+          {userInfo.role === "admin" ? (
+            <div>
+              <h4 className="form-title">Admin Statistics</h4>
+              <div className="content-center">
+                <StatsItem
+                  title="Current Users"
+                  count={adminStats.users}
+                  color="#f59e0b"
+                  bcg="#fef3c7"
+                  icon={<FaSuitcaseRolling />}
+                />
+                <StatsItem
+                  title="Total Ships"
+                  count={adminStats.ships}
+                  color="#647acb"
+                  bcg="#e0e8f9"
+                  icon={<FaCalendarCheck />}
+                />
+              </div>
+
+              {/* Add the StatsGraph component here */}
+              <StatsGraph
+                shipsData={adminStats.shipsData || []}
+                bookingsData={adminStats.bookingsData || []}
+              />
+            </div>
+          ) : (
+            <div>
+              <h4 style={{ textAlign: "center", marginBottom: "30px" }}>
+                Booking Details
+              </h4>
+
+              <div className="content-center">
+                {bookings.length > 0 ? (
+                  bookings.map((booking) => (
+                    <Box
+                      key={booking._id}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                        position: "relative",
+                        padding: 2,
+                        marginBottom: 4,
+                      }}
+                    >
+                      <Card
+                        sx={{
+                          width: 500,
+                          boxShadow: 6,
+                          position: "relative",
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          className="card-media"
+                          image={booking.shipImage || Test}
+                          alt={booking.shipName || "Ship Image"}
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="div">
+                            {booking.shipName}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Booking Date:{" "}
+                            <span style={{ color: "#2196f3" }}>
+                              {new Date(booking.bookedAt).toLocaleDateString()}
+                            </span>
+                          </Typography>
+                          <Divider />
+                        </CardContent>
+                      </Card>
+
+                      <Box className="card-overlay">
+                        <CardContent>
+                          <Typography variant="body2" color="text.secondary">
+                            <span style={{ fontWeight: "bold" }}>
+                              Capacity:
+                            </span>{" "}
+                            <span style={{ color: "#ff5722" }}>
+                              {booking.capacity || "N/A"}
+                            </span>
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <span style={{ fontWeight: "bold" }}>
+                              Location:
+                            </span>{" "}
+                            <span style={{ color: "#4caf50" }}>
+                              {booking.location || "N/A"}
+                            </span>
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <span style={{ fontWeight: "bold" }}>
+                              Price per Hour:
+                            </span>{" "}
+                            <span style={{ color: "#2196f3" }}>
+                              {booking.pricePerHour
+                                ? `$ ${booking.pricePerHour}`
+                                : "N/A"}
+                            </span>
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <span style={{ fontWeight: "bold" }}>
+                              Features:
+                            </span>{" "}
+                            <span style={{ color: "#9c27b0" }}>
+                              {booking.shipFeatures || "N/A"}
+                            </span>
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <span style={{ fontWeight: "bold" }}>Status:</span>{" "}
+                            <span
+                              style={{
+                                color:
+                                  booking.isApproved === "pending"
+                                    ? "#f59e0b"
+                                    : booking.isApproved === "approved"
+                                    ? "#d66a6a"
+                                    : "#647acb",
+                              }}
+                            >
+                              {booking.isApproved || "N/A"}
+                            </span>
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            <span style={{ fontWeight: "bold" }}>Booked:</span>{" "}
+                            <span
+                              style={{
+                                color: booking.booked ? "#4caf50" : "#d66a6a",
+                              }}
+                            >
+                              {booking.booked ? "Yes" : "No"}
+                            </span>
+                          </Typography>
+                        </CardContent>
+                      </Box>
+                    </Box>
+                  ))
+                ) : (
+                  <Typography>No bookings found.</Typography>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </Wrapper>
+    </div>
+  );
+};
+
+export default Stats;
