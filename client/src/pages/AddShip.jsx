@@ -64,11 +64,26 @@ const AddShip = () => {
   };
 
   return user.role === "user" ? (
-    <img
-      src={access}
-      alt="Access"
-      style={{ maxWidth: "78%", height: "78%", marginLeft: "100px" }}
-    />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        maxHeight: "53vh", // Full height to center vertically
+      }}
+    >
+      <img
+        src={access}
+        alt="Access"
+        style={{
+          maxWidth: "100%",
+          height: "100%",
+         
+          marginTop:"100px"
+
+        }}
+      />
+    </div>
   ) : (
     <Wrapper>
       <form
