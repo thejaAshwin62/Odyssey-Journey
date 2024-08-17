@@ -1,13 +1,13 @@
 <div align="center">
   <br />
-<a href="https://odyssey-journey.onrender.com/"><a href="https://ibb.co/frJ0tgC"><img src="https://i.ibb.co/p4qXZ73/ship.png" alt="ship" border="0"></a>
+<a href="https://odyssey-journey.onrender.com/"><a href=https://odyssey-journey.onrender.com/><img src="https://i.ibb.co/p4qXZ73/ship.png" alt="ship" border="0"></a>
   <br />
 
   <h2> Avaiable Ships </h2>
-<a href="https://ibb.co/kyB47x8"><img src="https://i.ibb.co/1nQrgLq/ship2.png" alt="ship2" border="0"></a>
+<a href=https://odyssey-journey.onrender.com/><img src="https://i.ibb.co/1nQrgLq/ship2.png" alt="ship2" border="0"></a>
 
 <h2> Admin Pannel </h2>
-<a href="https://ibb.co/8gzwtkr"><img src="https://i.ibb.co/chb9Vq6/ship3.png" alt="ship3" border="0"></a>
+<a href=https://odyssey-journey.onrender.com/><img src="https://i.ibb.co/chb9Vq6/ship3.png" alt="ship3" border="0"></a>
 
   <div>
     <img src="https://img.shields.io/badge/-MongoDB-black?style=for-the-badge&logoColor=white&logo=mongodb&color=47A248" alt="mongodb" />
