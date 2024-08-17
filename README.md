@@ -7,14 +7,19 @@
 <a href="https://ibb.co/kyB47x8"><img src="https://i.ibb.co/1nQrgLq/ship2.png" alt="ship2" border="0"></a>
 
   <div>
-    <img src="https://img.shields.io/badge/-React_JS-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="react.js" />
+   <img src="https://img.shields.io/badge/-React_JS-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="react.js" />
+<img src="https://img.shields.io/badge/-MongoDB-black?style=for-the-badge&logoColor=white&logo=mongodb&color=47A248" alt="mongodb" />
+<img src="https://img.shields.io/badge/-Express_JS-black?style=for-the-badge&logoColor=white&logo=express&color=000000" alt="express.js" />
+<img src="https://img.shields.io/badge/-Node_JS-black?style=for-the-badge&logoColor=white&logo=node.js&color=339933" alt="node.js" />
+<img src="https://img.shields.io/badge/-Material_UI-black?style=for-the-badge&logoColor=white&logo=mui&color=007FFF" alt="material-ui" />
+
   </div>
 
-  <h3 align="center">Here you can shortlist your webpage document into crisp and clarity explanations</h3>
-  <h2> https://tinger-finity.netlify.app/ </h2>
+  <h3 align="center">Here you can view the web page </h3>
+  <h2> https://odyssey-journey.onrender.com/ </h2>
 </div>
 
-This is an API which extracts news/article body from a URL and uses GPT to summarize (and optionally translate) the article content. Useful for text mining purposes. Leverages powerful and flexible web scraping engine (ScrapeNinja.net) with high-quality rotating proxies under the hood.
+My project offers users a seamless experience to book and manage ship events. This platform caters to both event organizers and attendees
 
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
