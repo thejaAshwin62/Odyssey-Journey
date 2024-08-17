@@ -3,6 +3,9 @@
 <a href="https://odyssey-journey.onrender.com/"><a href="https://ibb.co/frJ0tgC"><img src="https://i.ibb.co/p4qXZ73/ship.png" alt="ship" border="0"></a>
   <br />
 
+  <h2> Ships </h2>
+<a href="https://ibb.co/kyB47x8"><img src="https://i.ibb.co/1nQrgLq/ship2.png" alt="ship2" border="0"></a>
+
   <div>
     <img src="https://img.shields.io/badge/-React_JS-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="react.js" />
   </div>
